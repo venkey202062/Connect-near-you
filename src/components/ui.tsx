@@ -420,11 +420,9 @@ interface SettingsRowProps {
 }
 
 export function SettingsRow({ icon, label, value, onPress, toggle, toggled, onToggle, danger, last }: SettingsRowProps) {
-  return (
-    <button
-      onClick={toggle ? undefined : onPress}
-      className={`w-full flex items-center gap-4 px-5 py-4 ${last ? '' : 'border-b border-white/5'} ${danger ? 'text-[#FF4040]' : 'text-[#F0F0FA]'} active:bg-white/3 text-left`}
-    >
+  const base = `w-full flex items-center gap-4 px-5 py-4 ${last ? '' : 'border-b border-white/5'} ${danger ? 'text-[#FF4040]' : 'text-[#F0F0FA]'} text-left`;
+  const inner = (
+    <>
       <span className="text-xl w-6 text-center">{icon}</span>
       <span className="flex-1 text-sm font-medium">{label}</span>
       {toggle ? (
@@ -435,6 +433,14 @@ export function SettingsRow({ icon, label, value, onPress, toggle, toggled, onTo
           {onPress && <span className="text-[#7070A0]">›</span>}
         </>
       )}
+    </>
+  );
+  if (toggle) {
+    return <div className={base}>{inner}</div>;
+  }
+  return (
+    <button onClick={onPress} className={`${base} active:bg-white/5`}>
+      {inner}
     </button>
   );
 }
