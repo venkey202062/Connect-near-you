@@ -40,7 +40,7 @@ export function ChatListScreen() {
 
   return (
     <div className="flex flex-col h-full bg-[#0A0A16]">
-      <div className="px-5 pt-14 pb-3">
+      <div className="px-5 pt-5 pb-3">
         <div className="flex items-center justify-between">
           <h1 data-heading className="text-2xl font-extrabold text-[#F0F0FA]">Messages</h1>
           {totalUnread > 0 && (
@@ -255,7 +255,7 @@ export function ChatScreen() {
   return (
     <div className="flex flex-col h-full bg-[#0A0A16]">
       {/* Header */}
-      <div className="flex items-center gap-3 px-4 pt-12 pb-3 bg-[#0A0A16] border-b border-white/5">
+      <div className="flex items-center gap-3 px-4 pt-3 pb-3 bg-[#0A0A16] border-b border-white/5">
         <button onClick={goBack} className="text-[#F0F0FA] text-2xl w-9 h-9 flex items-center justify-center">←</button>
         <button onClick={() => navigate('profile_view', { userId: user.id })} className="flex items-center gap-3 flex-1">
           <Avatar user={user} size="md" showStatus status={user.status} />

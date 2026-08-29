@@ -26,7 +26,7 @@ export function MyProfileScreen() {
     <div className="flex flex-col h-full bg-[#0A0A16]">
       <div className="flex-1 overflow-y-auto">
         {/* Header */}
-        <div className="px-5 pt-14 pb-5">
+        <div className="px-5 pt-5 pb-5">
           <div className="flex items-start justify-between mb-5">
             <h1 data-heading className="text-2xl font-extrabold text-[#F0F0FA]">My Profile</h1>
             <button onClick={() => navigate('edit_profile')} className="text-[#FF3D6B] text-sm font-semibold">Edit</button>

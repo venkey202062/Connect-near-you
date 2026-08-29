@@ -79,7 +79,7 @@ export function DiscoverScreen() {
   return (
     <div className="flex flex-col h-full bg-[#0A0A16]">
       {/* Header */}
-      <div className="px-5 pt-14 pb-3">
+      <div className="px-5 pt-5 pb-3">
         <div className="flex items-start justify-between mb-3">
           <div>
             <h1 data-heading className="text-2xl font-extrabold text-[#F0F0FA]">People near you</h1>
@@ -321,7 +321,7 @@ export function SearchScreen() {
 
   return (
     <div className="flex flex-col h-full bg-[#0A0A16]">
-      <div className="px-5 pt-14 pb-3">
+      <div className="px-5 pt-5 pb-3">
         <h1 data-heading className="text-2xl font-extrabold text-[#F0F0FA] mb-4">Search</h1>
         <div className="relative mb-4">
           <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#7070A0]">⊙</span>

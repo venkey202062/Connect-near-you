@@ -187,7 +187,7 @@ export function VideoCallScreen() {
       <div className="absolute inset-0 bg-black/40" />
 
       {/* Header status */}
-      <div className="relative flex items-center justify-between px-5 pt-12 pb-4">
+      <div className="relative flex items-center justify-between px-5 pt-3 pb-4">
         <div>
           <h2 data-heading className="text-white font-bold text-xl">{user.name}</h2>
           <p className={`text-sm font-medium ${phase === 'connected' ? 'text-emerald-400' : 'text-white/60'}`}>

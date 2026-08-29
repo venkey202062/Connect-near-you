@@ -61,7 +61,7 @@ export function WelcomeScreen() {
       <div className="absolute inset-0 bg-gradient-to-b from-[#0A0A16]/60 via-transparent to-[#0A0A16]" />
 
       {/* Logo */}
-      <div className="relative flex items-center gap-2 p-6 pt-16">
+      <div className="relative flex items-center gap-2 p-6 pt-4">
         <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#FF3D6B] to-[#FF7A3D] flex items-center justify-center">
           <span className="text-white text-lg">♡</span>
         </div>
@@ -199,7 +199,7 @@ export function OnboardingScreen() {
   return (
     <div className="flex flex-col h-full bg-[#0A0A16]">
       {/* Progress header */}
-      <div className="px-5 pt-14 pb-4">
+      <div className="px-5 pt-5 pb-4">
         <div className="flex items-center gap-3 mb-4">
           {stepIndex > 0 && (
             <button onClick={() => setStep(STEPS[stepIndex - 1])} className="text-[#7070A0] text-2xl">←</button>

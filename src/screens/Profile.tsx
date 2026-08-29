@@ -89,7 +89,7 @@ export function ProfileViewScreen() {
         <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-[#0A0A16] to-transparent" />
 
         {/* Nav buttons */}
-        <div className="absolute top-12 left-4 right-4 flex items-center justify-between">
+        <div className="absolute top-3 left-4 right-4 flex items-center justify-between">
           <button onClick={goBack} className="w-10 h-10 flex items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-sm">←</button>
           <button onClick={() => setShowMore(true)} className="w-10 h-10 flex items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-sm text-xl">⋯</button>
         </div>
@@ -276,7 +276,7 @@ export function PhotoViewerScreen() {
 
   return (
     <div className="fixed inset-0 bg-black z-50 flex flex-col">
-      <div className="flex items-center justify-between px-4 pt-12 pb-4">
+      <div className="flex items-center justify-between px-4 pt-3 pb-4">
         <button onClick={goBack} className="text-white text-2xl w-10 h-10 flex items-center justify-center">✕</button>
         <span className="text-white/60 text-sm">{index + 1} / {photos.length}</span>
         <div className="w-10" />
