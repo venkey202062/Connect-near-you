@@ -31,6 +31,8 @@ interface AppState {
   isOnboarded: boolean;
   isLoggedIn: boolean;
   params: Record<string, unknown>;
+  savedPhotos: string[];
+  theme: 'dark' | 'light';
 }
 
 type Action =
@@ -51,7 +53,9 @@ type Action =
   | { type: 'SET_LOCATION'; location: string }
   | { type: 'COMPLETE_ONBOARDING' }
   | { type: 'LOGOUT' }
-  | { type: 'DELETE_ACCOUNT' };
+  | { type: 'DELETE_ACCOUNT' }
+  | { type: 'SAVE_PHOTO'; url: string }
+  | { type: 'TOGGLE_THEME' };
 
 const initialState: AppState = {
   navStack: [{ screen: 'splash' }],
@@ -65,6 +69,8 @@ const initialState: AppState = {
   isOnboarded: false,
   isLoggedIn: false,
   params: {},
+  savedPhotos: [],
+  theme: 'dark',
 };
 
 function reducer(state: AppState, action: Action): AppState {
@@ -156,6 +162,11 @@ function reducer(state: AppState, action: Action): AppState {
       return { ...initialState, navStack: [{ screen: 'welcome' }], isOnboarded: false, isLoggedIn: false };
     case 'DELETE_ACCOUNT':
       return { ...initialState, navStack: [{ screen: 'welcome' }] };
+    case 'SAVE_PHOTO':
+      if (state.savedPhotos.includes(action.url)) return state;
+      return { ...state, savedPhotos: [action.url, ...state.savedPhotos] };
+    case 'TOGGLE_THEME':
+      return { ...state, theme: state.theme === 'dark' ? 'light' : 'dark' };
     default:
       return state;
   }
@@ -170,6 +181,7 @@ interface AppContextValue {
   resetNav: (screen: Screen) => void;
   dispatch: React.Dispatch<Action>;
   showToast: (text: string, type?: ToastMsg['type']) => void;
+  toggleTheme: () => void;
 }
 
 const AppContext = createContext<AppContextValue | null>(null);
@@ -193,8 +205,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
     setTimeout(() => dispatch({ type: 'REMOVE_TOAST', id }), 3000);
   };
 
+  const toggleTheme = () => dispatch({ type: 'TOGGLE_THEME' });
+
   return (
-    <AppContext.Provider value={{ state, currentScreen, params, navigate, goBack, resetNav, dispatch, showToast }}>
+    <AppContext.Provider value={{ state, currentScreen, params, navigate, goBack, resetNav, dispatch, showToast, toggleTheme }}>
       {children}
     </AppContext.Provider>
   );

@@ -41,6 +41,23 @@
   --radius: 14px;
 }
 
+[data-theme="light"] {
+  --background: #F0F0FF;
+  --foreground: #0A0A20;
+  --card: #FFFFFF;
+  --card-foreground: #0A0A20;
+  --primary: #FF3D6B;
+  --primary-foreground: #FFFFFF;
+  --secondary: #E8E8F8;
+  --secondary-foreground: #404065;
+  --muted: #F4F4FF;
+  --muted-foreground: #70709A;
+  --accent: #FF7A3D;
+  --accent-foreground: #FFFFFF;
+  --border: rgba(0, 0, 0, 0.08);
+  --ring: #FF3D6B;
+}
+
 html, body, #root {
   height: 100%;
   margin: 0;
