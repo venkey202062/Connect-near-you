@@ -348,9 +348,9 @@ export function SearchScreen() {
         ) : (
           <div className="px-5 space-y-3">
             {results.map(user => (
-              <button key={user.id}
-                onClick={() => navigate('profile_view', { userId: user.id })}
-                className="w-full flex items-center gap-4 bg-[#141424] rounded-2xl p-3 text-left active:opacity-80">
+              <div key={user.id}
+                className="flex items-center gap-4 bg-[#141424] rounded-2xl p-3 cursor-pointer active:opacity-80"
+                onClick={() => navigate('profile_view', { userId: user.id })}>
                 <div className="w-14 h-14 rounded-full overflow-hidden bg-[#1E1E32] flex-shrink-0 flex items-center justify-center">
                   {user.photos[0] ? (
                     <img src={user.photos[0]} className="w-full h-full object-cover" alt={user.name} />
@@ -374,7 +374,7 @@ export function SearchScreen() {
                   className="w-9 h-9 flex items-center justify-center rounded-full bg-[#FF3D6B]/10 text-[#FF3D6B] flex-shrink-0">
                   ✉
                 </button>
-              </button>
+              </div>
             ))}
           </div>
         )}
