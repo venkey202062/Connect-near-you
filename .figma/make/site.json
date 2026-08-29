@@ -1,1 +1,10 @@
-{}
+{
+  "description": "This web application enables users to create and manage live events effortlessly, offering tools for scheduling, ticketing, and audience engagement.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
