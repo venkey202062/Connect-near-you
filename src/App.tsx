@@ -1,4 +1,5 @@
 import { ReactElement } from 'react';
+import { Capacitor } from '@capacitor/core';
 import { AppProvider, useApp } from './store/AppContext';
 import { ToastContainer } from './components/ui';
 
@@ -65,6 +66,7 @@ function HomeIndicator() {
 
 function AppShell() {
   const { currentScreen, state } = useApp();
+  const isNative = Capacitor.isNativePlatform();
   const noStatusBar = ['splash', 'welcome', 'photo_viewer', 'audio_call', 'video_call', 'incoming_call'];
   const noHomeBar = ['photo_viewer', 'audio_call', 'video_call', 'incoming_call'];
 
@@ -96,15 +98,19 @@ function AppShell() {
   };
 
   const screen = screenMap[currentScreen] ?? <SplashScreen />;
-  const showStatus = !noStatusBar.includes(currentScreen);
-  const showHome = !noHomeBar.includes(currentScreen);
+  const showStatus = !isNative && !noStatusBar.includes(currentScreen);
+  const showHome = !isNative && !noHomeBar.includes(currentScreen);
 
   return (
-    <div className="min-h-screen bg-[#111] flex items-center justify-center" style={{ background: 'radial-gradient(ellipse at 30% 50%, #1a0a20 0%, #0a0a10 60%)' }}>
-      {/* Phone shell */}
+    <div
+      className={isNative ? "min-h-screen w-full bg-[#0A0A16]" : "min-h-screen bg-[#111] flex items-center justify-center"}
+      style={!isNative ? { background: 'radial-gradient(ellipse at 30% 50%, #1a0a20 0%, #0a0a10 60%)' } : undefined}
+    >
       <div
-        className="relative flex flex-col bg-[#0A0A16] overflow-hidden shadow-2xl"
-        style={{
+        className={isNative
+          ? "relative flex h-screen w-full flex-col overflow-hidden bg-[#0A0A16]"
+          : "relative flex flex-col bg-[#0A0A16] overflow-hidden shadow-2xl"}
+        style={isNative ? undefined : {
           width: 390,
           height: 844,
           borderRadius: 52,
@@ -112,11 +118,12 @@ function AppShell() {
           boxShadow: '0 0 0 1px #333, 0 40px 120px rgba(0,0,0,0.8), inset 0 0 0 1px rgba(255,255,255,0.05)',
         }}
       >
-        {/* Side button reflections */}
-        <div className="absolute -right-[11px] top-28 w-[3px] h-16 bg-[#2a2a2a] rounded-r-full" />
-        <div className="absolute -left-[11px] top-20 w-[3px] h-10 bg-[#2a2a2a] rounded-l-full" />
-        <div className="absolute -left-[11px] top-36 w-[3px] h-14 bg-[#2a2a2a] rounded-l-full" />
-        <div className="absolute -left-[11px] top-56 w-[3px] h-14 bg-[#2a2a2a] rounded-l-full" />
+        {!isNative && <>
+          <div className="absolute -right-[11px] top-28 w-[3px] h-16 bg-[#2a2a2a] rounded-r-full" />
+          <div className="absolute -left-[11px] top-20 w-[3px] h-10 bg-[#2a2a2a] rounded-l-full" />
+          <div className="absolute -left-[11px] top-36 w-[3px] h-14 bg-[#2a2a2a] rounded-l-full" />
+          <div className="absolute -left-[11px] top-56 w-[3px] h-14 bg-[#2a2a2a] rounded-l-full" />
+        </>}
 
         {showStatus && <StatusBar />}
 
