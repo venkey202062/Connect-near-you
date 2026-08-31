@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer, ReactNode } from 'react';
+import { createContext, useContext, useEffect, useReducer, ReactNode } from 'react';
 import {
   CurrentUser, User, Conversation, Filters, Message,
   defaultCurrentUser, sampleUsers, sampleConversations, defaultFilters,
@@ -188,6 +188,11 @@ const AppContext = createContext<AppContextValue | null>(null);
 
 export function AppProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = state.theme;
+    document.documentElement.style.colorScheme = state.theme;
+  }, [state.theme]);
 
   const currentEntry = state.navStack[state.navStack.length - 1];
   const currentScreen = currentEntry.screen;
