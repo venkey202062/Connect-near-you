@@ -39,7 +39,7 @@ export function SplashScreen() {
 
 // ─── Welcome ──────────────────────────────────────────────────────────────────
 export function WelcomeScreen() {
-  const { navigate } = useApp();
+  const { navigate, state, toggleTheme } = useApp();
   return (
     <div className="relative flex flex-col h-full bg-[#0A0A16] overflow-hidden">
       {/* Background image collage */}
@@ -66,6 +66,13 @@ export function WelcomeScreen() {
           <span className="text-white text-lg">♡</span>
         </div>
         <span data-heading className="text-white font-extrabold text-xl">Nearme</span>
+        <button
+          onClick={toggleTheme}
+          aria-label={`Switch to ${state.theme === 'dark' ? 'light' : 'dark'} mode`}
+          className="ml-auto w-10 h-10 rounded-full bg-white/10 border border-white/10 text-white flex items-center justify-center"
+        >
+          {state.theme === 'dark' ? '☀️' : '🌙'}
+        </button>
       </div>
 
       {/* Content */}
@@ -80,7 +87,7 @@ export function WelcomeScreen() {
           <Button variant="primary" fullWidth size="lg" onClick={() => navigate('onboarding')}>
             Create Account
           </Button>
-          <Button variant="outline" fullWidth size="lg" onClick={() => navigate('onboarding', { returning: true })}>
+          <Button variant="outline" fullWidth size="lg" onClick={() => navigate('login')}>
             Log In
           </Button>
           <div className="grid grid-cols-2 gap-3 mt-2">
@@ -94,6 +101,134 @@ export function WelcomeScreen() {
         </div>
         <p className="text-[#4A4A6A] text-xs text-center mt-6">
           By continuing you agree to our Terms of Service and Privacy Policy.
+        </p>
+      </div>
+    </div>
+  );
+}
+
+
+// ─── Login ────────────────────────────────────────────────────────────────────
+export function LoginScreen() {
+  const { goBack, resetNav, showToast } = useApp();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(true);
+  const [loading, setLoading] = useState(false);
+
+  function handleLogin() {
+    if (!email.trim() || !password) {
+      showToast('Enter your email and password', 'error');
+      return;
+    }
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      showToast('Signed in successfully');
+      resetNav('discover');
+    }, 900);
+  }
+
+  function handleProvider(name: string) {
+    showToast(`${name} sign-in is ready for integration`, 'info');
+  }
+
+  return (
+    <div className="flex flex-col h-full bg-[#0A0A16]">
+      <div className="px-5 pt-5">
+        <button onClick={goBack} className="text-[#B8B8D8] text-2xl" aria-label="Go back">←</button>
+      </div>
+
+      <div className="flex-1 overflow-y-auto px-5 pb-8">
+        <div className="pt-8 pb-6">
+          <h1 data-heading className="text-3xl font-extrabold text-[#F0F0FA]">Welcome back</h1>
+          <p className="text-[#7070A0] mt-2 leading-relaxed">
+            Log in to continue meeting people near you.
+          </p>
+        </div>
+
+        <div className="space-y-4">
+          <div>
+            <label className="block text-[#7070A0] text-xs font-semibold uppercase tracking-wider mb-1.5">Email</label>
+            <input
+              type="email"
+              autoComplete="email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              placeholder="you@example.com"
+              className="w-full bg-[#141424] border border-white/10 rounded-2xl px-4 py-3.5 text-[#F0F0FA] placeholder-[#4A4A6A] outline-none focus:border-[#FF3D6B]/50"
+            />
+          </div>
+
+          <div>
+            <label className="block text-[#7070A0] text-xs font-semibold uppercase tracking-wider mb-1.5">Password</label>
+            <div className="relative">
+              <input
+                type={showPassword ? 'text' : 'password'}
+                autoComplete="current-password"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                placeholder="Enter your password"
+                className="w-full bg-[#141424] border border-white/10 rounded-2xl pl-4 pr-12 py-3.5 text-[#F0F0FA] placeholder-[#4A4A6A] outline-none focus:border-[#FF3D6B]/50"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(v => !v)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-[#7070A0] text-sm px-2 py-2"
+                aria-label={showPassword ? 'Hide password' : 'Show password'}
+              >
+                {showPassword ? 'Hide' : 'Show'}
+              </button>
+            </div>
+          </div>
+
+          <div className="flex items-center justify-between py-1">
+            <button
+              type="button"
+              onClick={() => setRememberMe(v => !v)}
+              className="flex items-center gap-2 text-[#B8B8D8] text-sm"
+            >
+              <span className={`w-5 h-5 rounded-md border flex items-center justify-center ${rememberMe ? 'bg-[#FF3D6B] border-[#FF3D6B] text-white' : 'border-white/15'}`}>
+                {rememberMe ? '✓' : ''}
+              </span>
+              Remember me
+            </button>
+            <button
+              type="button"
+              onClick={() => showToast('Password reset flow will be connected to email authentication', 'info')}
+              className="text-[#FF3D6B] text-sm font-semibold"
+            >
+              Forgot password?
+            </button>
+          </div>
+
+          <Button variant="primary" fullWidth size="lg" onClick={handleLogin} loading={loading}>
+            Log In
+          </Button>
+        </div>
+
+        <div className="flex items-center gap-3 my-6">
+          <div className="h-px bg-white/10 flex-1" />
+          <span className="text-[#7070A0] text-xs uppercase tracking-wider">or continue with</span>
+          <div className="h-px bg-white/10 flex-1" />
+        </div>
+
+        <div className="space-y-3">
+          <button onClick={() => handleProvider('Google')} className="w-full flex items-center justify-center gap-3 py-3.5 rounded-2xl bg-[#141424] border border-white/10 text-[#F0F0FA] font-semibold">
+            <span className="text-base font-bold">G</span> Continue with Google
+          </button>
+          <button onClick={() => handleProvider('Apple')} className="w-full flex items-center justify-center gap-3 py-3.5 rounded-2xl bg-[#141424] border border-white/10 text-[#F0F0FA] font-semibold">
+            <span></span> Continue with Apple
+          </button>
+          <button onClick={() => handleProvider('Phone')} className="w-full flex items-center justify-center gap-3 py-3.5 rounded-2xl bg-[#141424] border border-white/10 text-[#F0F0FA] font-semibold">
+            <span>📱</span> Continue with phone number
+          </button>
+        </div>
+
+        <p className="text-[#7070A0] text-sm text-center mt-7">
+          New to Nearme?{' '}
+          <button onClick={() => resetNav('onboarding')} className="text-[#FF3D6B] font-semibold">Create an account</button>
         </p>
       </div>
     </div>
