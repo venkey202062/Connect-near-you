@@ -4,12 +4,45 @@
     <!-- figma:head-start -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<style>
+  #boot-status { position: fixed; inset: 0; z-index: 2147483647; display: flex; align-items: center; justify-content: center; padding: 24px; background: #0A0A16; color: #F0F0FA; font-family: system-ui, sans-serif; }
+  #boot-status.hidden { display: none; }
+  #boot-status .card { max-width: 520px; width: 100%; background: #141424; border: 1px solid rgba(255,255,255,.08); border-radius: 20px; padding: 24px; }
+  #boot-status h1 { margin: 0 0 8px; font-size: 22px; }
+  #boot-status p { margin: 0; color: #B8B8D8; line-height: 1.5; white-space: pre-wrap; word-break: break-word; }
+</style>
     <title><!-- figma:title --></title>
     <!-- figma:head-end -->
   </head>
   <body>
     <!-- figma:body-start -->
     <div id="root"></div>
+    <div id="boot-status"><div class="card"><h1>Loading Nearme…</h1><p id="boot-message">Starting the interactive mockup.</p></div></div>
+    <script>
+      (function () {
+        const status = document.getElementById('boot-status');
+        const message = document.getElementById('boot-message');
+        window.setTimeout(function () {
+          if (!document.getElementById('root')?.children.length) {
+            message.textContent = 'The app did not render. Refresh this page once. If it still stays here, send me a screenshot of this message.';
+          } else {
+            status.classList.add('hidden');
+          }
+        }, 2500);
+        window.addEventListener('error', function (event) {
+          status.classList.remove('hidden');
+          message.textContent = 'App error: ' + (event.error?.message || event.message || 'Unknown browser error');
+        });
+        window.addEventListener('unhandledrejection', function (event) {
+          status.classList.remove('hidden');
+          message.textContent = 'App error: ' + (event.reason?.message || String(event.reason || 'Unknown async error'));
+        });
+        const observer = new MutationObserver(function () {
+          if (document.getElementById('root')?.children.length) status.classList.add('hidden');
+        });
+        observer.observe(document.getElementById('root'), { childList: true });
+      })();
+    </script>
     <script type="module" src="/src/main.tsx"></script>
     <!-- figma:body-end -->
   </body>
