@@ -5,7 +5,7 @@ import { Gender } from '../data/mockData';
 
 // ─── MyProfileScreen ──────────────────────────────────────────────────────────
 export function MyProfileScreen() {
-  const { state, navigate, dispatch, showToast } = useApp();
+  const { state, navigate, dispatch, showToast, toggleTheme } = useApp();
   const { currentUser } = state;
   const [showLogout, setShowLogout] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
@@ -74,6 +74,12 @@ export function MyProfileScreen() {
               <span className="text-[#7070A0] text-xs font-semibold uppercase tracking-wider">Preferences</span>
             </div>
             <SettingsRow icon="🔔" label="Notifications" onPress={() => navigate('notification_settings')} />
+            <SettingsRow
+              icon={state.theme === 'dark' ? '🌙' : '☀️'}
+              label="Appearance"
+              value={state.theme === 'dark' ? 'Dark' : 'Light'}
+              onPress={toggleTheme}
+            />
             <SettingsRow icon="🔒" label="Security" onPress={() => navigate('security_settings')} last />
           </div>
 
