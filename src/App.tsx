@@ -3,7 +3,7 @@ import { AppProvider, useApp } from './store/AppContext';
 import { ToastContainer } from './components/ui';
 
 // Auth screens
-import { SplashScreen, WelcomeScreen, OnboardingScreen, LocationPermScreen } from './screens/Auth';
+import { SplashScreen, WelcomeScreen, LoginScreen, OnboardingScreen, LocationPermScreen } from './screens/Auth';
 // Discover
 import { DiscoverScreen, SearchScreen } from './screens/Discover';
 // Profile
@@ -71,6 +71,7 @@ function AppShell() {
   const screenMap: Record<string, ReactElement> = {
     splash: <SplashScreen />,
     welcome: <WelcomeScreen />,
+    login: <LoginScreen />,
     onboarding: <OnboardingScreen />,
     location_perm: <LocationPermScreen />,
     discover: <DiscoverScreen />,
